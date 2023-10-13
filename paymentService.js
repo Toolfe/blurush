@@ -12,26 +12,26 @@ app.use(express.static("public"));
 app.set("views", __dirname + "/public");
 app.engine("html", require("ejs").renderFile);
 
-const JWTAuthourization = (req, res, next) => {
-  var authourization = req.headers["Authourization"];
-  if (token) {
-    var token = authourization?.split(" ");
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, data) => {
-      if (err) {
-        res.send("Invalid access token");
-      } else {
-        console.log(data);
-        next();
-      }
-    });
-  } else {
-    res.status(HttpStatusCode.Forbidden.valueOf()).json({
-      ERROR: "UNAUTHOURIZED",
-    });
-  }
-};
+// const JWTAuthourization = (req, res, next) => {
+//   var authourization = req.headers["Authourization"];
+//   if (token) {
+//     var token = authourization?.split(" ");
+//     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, data) => {
+//       if (err) {
+//         res.send("Invalid access token");
+//       } else {
+//         console.log(data);
+//         next();
+//       }
+//     });
+//   } else {
+//     res.status(HttpStatusCode.Forbidden.valueOf()).json({
+//       ERROR: "UNAUTHOURIZED",
+//     });
+//   }
+// };
 
-app.use("/payment", JWTAuthourization, router);
+app.use("/payment", router);
 
 app.listen(process.env.PAYMENT_PORT, () => {
   console.log("PAYMENT API Started On:", process.env.PAYMENT_PORT);
